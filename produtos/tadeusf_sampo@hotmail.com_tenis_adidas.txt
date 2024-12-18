@@ -1,0 +1,1 @@
+{'nome': 'tenis_Adidas', 'preco': 250.0, 'categoria': 'Roupas', 'imagens': ['download_5.jpeg'], 'usuario': 'tadeusf_sampo@hotmail.com'}

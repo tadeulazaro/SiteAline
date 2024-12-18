@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aline Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* Estilo adicional para melhorar o layout */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f4f4f4, #e9ecef);
+            color: #333;
+            margin: 0;
+        }
+
+        header {
+            background-color: #1d3557;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-image: url("{{ url_for('static', filename='images/background-pattern.png') }}");
+            background-repeat: repeat;
+            background-size: 50px 50px;  /* Ajuste o tamanho conforme necessário */
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #ff6b6b;
+            transform: scale(1.1);
+        }
+
+        .welcome-message {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.1rem;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            max-width: 300px;
+            margin: auto;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .product-info {
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            font-size: 1rem;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+
+        .category {
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .btn-buy {
+            background-color: #e74c3c;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-buy:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .product-card img {
+                height: 150px;
+            }
+
+            .btn-buy {
+                padding: 10px 15px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Estilo para exibir o total de produtos no canto superior direito */
+        .total-produtos {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='css/logo.png') }}" alt="Logo Aline Store" class="logo">
+        <h1>Aline Store</h1><br><br>
+        <nav>
+            <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+            <a href="{{ url_for('adicionar') }}" class="nav-link">Adicionar Produto</a>
+            <a href="{{ url_for('meus_produtos') }}" class="nav-link">Meus Produtos</a>  
+            <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
+        </nav>
+
+        {% if session.get('email') %}
+        <div class="welcome-message">
+            Bem-vindo, {{ session['email'] }}! Você está autenticado.
+        </div>
+        {% else %}
+        <p>Você não está autenticado. Faça login <a href="{{ url_for('login') }}">aqui</a>.</p>
+        {% endif %}
+
+        <!-- Exibe o total de produtos no canto superior direito -->
+       
+        <div class="total-produtos">
+            <p>Total de produtos: {{ produtos|length }}</p>
+        </div>
+    </header>
+    <main>
+        <h2>Produtos Disponíveis</h2>
+
+
+
+        <br>  
+        <div class="product-grid">
+            {% for produto in produtos %}
+            <div class="product-card">
+                {% for imagem in produto['imagens'] %}
+                <img src="{{ url_for('static', filename='uploads/' + imagem) }}" alt="{{ produto['nome'] }}">
+                {% endfor %}
+                <div class="product-info">
+                    <h3>{{ produto['nome'] }}</h3>
+                    <p class="price">R$ {{ "%.2f"|format(produto['preco']) }}</p>
+                    <p class="category">Categoria: {{ produto['categoria'] }}</p>
+                    <p class="sold-by" style="font-size: 0.9rem; color: #ff6b6b; font-weight: bold;">Entregue e vendido por {{ produto['usuario'] }}</p> <!-- Texto de destaque -->
+                    <button class="btn-buy">Comprar</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

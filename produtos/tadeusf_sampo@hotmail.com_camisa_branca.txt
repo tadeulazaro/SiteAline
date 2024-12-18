@@ -1,0 +1,1 @@
+{'nome': 'Camisa_branca', 'preco': 25.0, 'categoria': 'Roupas', 'imagens': ['download_2.jpeg'], 'usuario': 'tadeusf_sampo@hotmail.com'}

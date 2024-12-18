@@ -1,0 +1,1 @@
+{'nome': 'Garoa', 'preco': 50.0, 'categoria': 'Roupas', 'imagens': ['download_12.jpeg'], 'usuario': 'lazaro@hotmail.com'}

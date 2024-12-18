@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoria: {{ categoria }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Aline Store - Categoria: {{ categoria }}</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Voltar</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Produtos na Categoria: {{ categoria }}</h2>
+        <div class="product-grid">
+            {% for produto in produtos %}
+            <div class="product-card">
+                <img src="{{ produto['imagem'] }}" alt="{{ produto['nome'] }}">
+                <h3>{{ produto['nome'] }}</h3>
+                <p>Preço: R$ {{ "%.2f"|format(produto['preco']) }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+
+        {% extends "base.html" %}
+
+{% block title %}Produtos - Aline Store{% endblock %}
+
+{% block content %}
+    <h2>Produtos Disponíveis</h2>
+    <div class="product-grid">
+        {% for produto in produtos %}
+        <div class="product-card">
+            {% for imagem in produto['imagens'] %}
+            <img src="{{ url_for('static', filename='uploads/' + imagem) }}" alt="{{ produto['nome'] }}">
+            {% endfor %}
+            <div class="product-info">
+                <h3>{{ produto['nome'] }}</h3>
+                <p class="price">R$ {{ "%.2f"|format(produto['preco']) }}</p>
+                <p class="category">Categoria: {{ produto['categoria'] }}</p>
+                <button class="btn-buy">Comprar</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+</body>
+</html>

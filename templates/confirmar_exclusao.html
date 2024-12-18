@@ -1,0 +1,6 @@
+<!-- confirmar_exclusao.html -->
+<h2>Você realmente deseja excluir o produto {{ produto.nome }}?</h2>
+<form method="POST">
+    <button type="submit">Sim, excluir</button>
+    <a href="{{ url_for('meus_produtos') }}">Cancelar</a>
+</form>

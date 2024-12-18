@@ -1,0 +1,1 @@
+{'nome': 'Boines', 'preco': 56.0, 'categoria': 'Roupas', 'imagens': ['download_9.jpeg'], 'usuario': 'tadeusf_sampo@hotmail.com'}

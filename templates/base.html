@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aline Store - {% block title %}Página Inicial{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* Estilo adicional para melhorar o layout */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f4f4f4, #e9ecef);
+            color: #333;
+            margin: 0;
+        }
+
+        header {
+        background-color: #1d3557;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      
+        background-repeat: repeat;
+        background-size: 50px 50px;  /* Ajuste o tamanho conforme necessário */
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        margin: 0 5px;
+        border-radius: 5px;
+        font-size: 1rem;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+        background-color: #ff6b6b;
+        transform: scale(1.1);
+    }
+
+        nav a:hover {
+            background-color: #1abc9c;
+        }
+
+        /* Mensagem de boas-vindas */
+        .welcome-message {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.1rem;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='css/logo.png') }}" alt="Logo Aline Store" class="logo">
+        <h1>Aline Store</h1><br>
+        <nav>
+            <a href="{{ url_for('index') }}" class="nav-link">Início</a>
+            <a href="{{ url_for('adicionar') }}" class="nav-link">Adicionar Produto</a>
+            <a href="{{ url_for('meus_produtos') }}" class="nav-link">Meus Produtos</a>  
+            <a href="{{ url_for('logout') }}" class="nav-link">Sair</a>
+        </nav>
+
+        {% if session.get('email') %}
+        <div class="welcome-message">
+            Bem-vindo, {{ session['email'] }}! Você está autenticado.
+        </div>
+        {% else %}
+        <p>Você não está autenticado. Faça login <a href="{{ url_for('login') }}">aqui</a>.</p>
+        {% endif %}
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
